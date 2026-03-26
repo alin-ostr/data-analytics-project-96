@@ -53,7 +53,6 @@ ORDER BY
     lpc.utm_source ASC,
     lpc.utm_medium ASC,
     lpc.utm_campaign ASC
-LIMIT 10
 " (visitor_id,visit_date,utm_source,utm_medium,utm_campaign,lead_id,created_at,amount,closing_reason,status_id) VALUES
 	 ('35060e525ca62de0a0aa93992c7e07799d855f79','2023-06-01 10:40:28','yandex','cpc','prof-frontend','26066151','2023-06-15 12:52:40',237990,'Успешная продажа',142),
 	 ('d183fbda6f03b965a1cd1cee0a3f7b81a44b78ec','2023-06-01 14:39:00','yandex','cpc','base-frontend','74450379','2023-06-30 14:36:31',201150,'Успешная продажа',142),
