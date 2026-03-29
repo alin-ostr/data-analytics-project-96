@@ -1,4 +1,4 @@
-INSERT INTO "WITH last_paid_click AS (
+"WITH last_paid_click AS (
     SELECT
         s.visitor_id,
         s.source AS utm_source,
