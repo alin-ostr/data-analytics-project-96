@@ -58,21 +58,21 @@ ad_costs AS (
     UNION ALL
 
     SELECT
-        utm_source,
-        utm_medium,
-        utm_campaign,
-        campaign_date,
-        SUM(daily_spent) AS daily_spent
-    FROM ya_ads
+        ya.utm_source,
+        ya.utm_medium,
+        ya.utm_campaign,
+        ya.campaign_date,
+        SUM(ya.daily_spent) AS daily_spent
+    FROM ya_ads AS ya
     GROUP BY utm_source, utm_medium, utm_campaign, campaign_date
 )
 
 SELECT
     lpc.visit_date,
-    COUNT(DISTINCT lpc.visitor_id) AS visitors_count,
     lpc.utm_source,
     lpc.utm_medium,
     lpc.utm_campaign,
+    COUNT(DISTINCT lpc.visitor_id) AS visitors_count,
     COALESCE(ac.total_cost, 0) AS total_cost,
     COUNT(DISTINCT la.lead_id) AS leads_count,
     COUNT(DISTINCT CASE
@@ -106,9 +106,10 @@ GROUP BY
     ac.total_cost
 ORDER BY
     revenue DESC NULLS LAST,
-    visit_date ASC,
+    lpc.visit_date ASC,
     visitors_count DESC,
-    utm_source ASC,
-    utm_medium ASC,
-    utm_campaign ASC
+    lpc.utm_source ASC,
+    lpc.utm_medium ASC,
+    lpc.utm_campaign ASC
 LIMIT 15;
+
