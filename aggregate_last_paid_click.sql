@@ -62,17 +62,17 @@ ad_costs AS (
         utm_medium,
         utm_campaign,
         campaign_date,
-        SUM(daily_spent)
+        SUM(daily_spent) AS daily_spent
     FROM ya_ads
     GROUP BY utm_source, utm_medium, utm_campaign, campaign_date
 )
 
 SELECT
     lpc.visit_date,
+    COUNT(DISTINCT lpc.visitor_id) AS visitors_count,
     lpc.utm_source,
     lpc.utm_medium,
     lpc.utm_campaign,
-    COUNT(DISTINCT lpc.visitor_id) AS visitors_count,
     COALESCE(ac.total_cost, 0) AS total_cost,
     COUNT(DISTINCT la.lead_id) AS leads_count,
     COUNT(DISTINCT CASE
