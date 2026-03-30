@@ -1,4 +1,4 @@
-INSERT INTO "WITH last_paid_click AS (
+"WITH last_paid_click AS (
     SELECT
         s.visitor_id,
         s.source AS utm_source,
@@ -123,7 +123,7 @@ LIMIT 15
 	 ('2023-06-01','yandex','cpc','base-frontend',40,18061,39,3,268515),
 	 ('2023-06-01','vk','cpc','prof-java',51,3115,23,2,232726),
 	 ('2023-06-01','yandex','cpc','prof-data-analytics',14,10086,14,2,220264);
-INSERT INTO "WITH last_paid_click AS (
+"WITH last_paid_click AS (
     SELECT
         s.visitor_id,
         s.source AS utm_source,
