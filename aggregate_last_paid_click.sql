@@ -4,8 +4,8 @@ WITH last_paid_click AS (
         s.source AS utm_source,
         s.medium AS utm_medium,
         s.campaign AS utm_campaign,
-        DATE(s.visit_date) AS visit_date,
-        s.visit_date AS full_visit_date
+        s.visit_date AS full_visit_date,
+        DATE(s.visit_date) AS visit_date
     FROM sessions AS s
     WHERE
         s.medium IN ('cpc', 'cpm', 'cpa', 'youtube', 'cpp', 'tg', 'social')
@@ -37,8 +37,9 @@ lead_attribution AS (
     LEFT JOIN LATERAL (
         SELECT *
         FROM last_paid_click AS lpc2
-        WHERE lpc2.visitor_id = l.visitor_id
-          AND lpc2.full_visit_date <= l.created_at
+        WHERE
+            lpc2.visitor_id = l.visitor_id
+            AND lpc2.full_visit_date <= l.created_at
         ORDER BY lpc2.full_visit_date DESC
         LIMIT 1
     ) AS lpc ON TRUE
@@ -84,16 +85,18 @@ SELECT
     END), 0) AS revenue
 FROM last_paid_click AS lpc
 LEFT JOIN lead_attribution AS la
-    ON lpc.visitor_id = la.visitor_id
-    AND lpc.utm_source = la.utm_source
-    AND lpc.utm_medium = la.utm_medium
-    AND lpc.utm_campaign = la.utm_campaign
-    AND lpc.visit_date = la.visit_date
+    ON
+        lpc.visitor_id = la.visitor_id
+        AND lpc.utm_source = la.utm_source
+        AND lpc.utm_medium = la.utm_medium
+        AND lpc.utm_campaign = la.utm_campaign
+        AND lpc.visit_date = la.visit_date
 LEFT JOIN ad_costs AS ac
-    ON lpc.utm_source = ac.utm_source
-    AND lpc.utm_medium = ac.utm_medium
-    AND lpc.utm_campaign = ac.utm_campaign
-    AND lpc.visit_date = ac.visit_date
+    ON
+        lpc.utm_source = ac.utm_source
+        AND lpc.utm_medium = ac.utm_medium
+        AND lpc.utm_campaign = ac.utm_campaign
+        AND lpc.visit_date = ac.visit_date
 WHERE la.lead_id IS NOT NULL OR TRUE
 GROUP BY
     lpc.visit_date,
