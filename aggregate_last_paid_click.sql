@@ -1,4 +1,4 @@
-"WITH last_paid_click AS (
+WITH last_paid_click AS (
     SELECT
         s.visitor_id,
         s.source AS utm_source,
@@ -112,7 +112,7 @@ ORDER BY
     lpc.utm_medium ASC,
     lpc.utm_campaign ASC
 LIMIT 15
-" (visit_date,utm_source,utm_medium,utm_campaign,visitors_count,total_cost,leads_count,purchases_count,revenue) VALUES
+	(visit_date,utm_source,utm_medium,utm_campaign,visitors_count,total_cost,leads_count,purchases_count,revenue) VALUES
 	 ('2023-06-01','yandex','cpc','freemium',103,21654,100,25,1654810),
 	 ('2023-06-01','yandex','cpc','prof-frontend',78,57138,73,12,1057000),
 	 ('2023-06-01','yandex','cpc','prof-python',62,33026,61,7,613196),
@@ -123,7 +123,7 @@ LIMIT 15
 	 ('2023-06-01','yandex','cpc','base-frontend',40,18061,39,3,268515),
 	 ('2023-06-01','vk','cpc','prof-java',51,3115,23,2,232726),
 	 ('2023-06-01','yandex','cpc','prof-data-analytics',14,10086,14,2,220264);
-"WITH last_paid_click AS (
+WITH last_paid_click AS (
     SELECT
         s.visitor_id,
         s.source AS utm_source,
@@ -237,7 +237,7 @@ ORDER BY
     lpc.utm_medium ASC,
     lpc.utm_campaign ASC
 LIMIT 15
-" (visit_date,utm_source,utm_medium,utm_campaign,visitors_count,total_cost,leads_count,purchases_count,revenue) VALUES
+	(visit_date,utm_source,utm_medium,utm_campaign,visitors_count,total_cost,leads_count,purchases_count,revenue) VALUES
 	 ('2023-06-01','yandex','cpc','prof-professions-brand',13,4818,13,3,154287),
 	 ('2023-06-20','telegram','cpp','base-java',3,0,1,1,151192),
 	 ('2023-06-01','yandex','cpc','dod-php',4,5964,4,1,150255),
