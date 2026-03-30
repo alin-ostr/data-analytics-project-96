@@ -1,33 +1,13 @@
-WITH paid_sessions AS (
-    SELECT
+WITH last_paid_click AS (
+    SELECT DISTINCT ON (s.visitor_id)
         s.visitor_id,
         s.visit_date,
         s.source AS utm_source,
         s.medium AS utm_medium,
-        s.campaign AS utm_campaign,
-        ROW_NUMBER() OVER (
-            PARTITION BY s.visitor_id
-            ORDER BY s.visit_date DESC
-        ) AS rn
+        s.campaign AS utm_campaign
     FROM sessions AS s
     WHERE s.medium IN ('cpc', 'cpm', 'cpa', 'youtube', 'cpp', 'tg', 'social')
-),
-
-last_paid_click AS (
-    SELECT *
-    FROM paid_sessions
-    WHERE rn = 1
-),
-
-lead_data AS (
-    SELECT
-        l.visitor_id,
-        l.lead_id,
-        l.created_at,
-        l.amount,
-        l.closing_reason,
-        l.status_id
-    FROM leads AS l
+    ORDER BY s.visitor_id ASC, s.visit_date DESC
 )
 
 SELECT
@@ -36,19 +16,18 @@ SELECT
     lpc.utm_source,
     lpc.utm_medium,
     lpc.utm_campaign,
-    ld.lead_id,
-    ld.created_at,
-    ld.amount,
-    ld.closing_reason,
-    ld.status_id
+    l.lead_id,
+    l.created_at,
+    l.amount,
+    l.closing_reason,
+    l.status_id
 FROM last_paid_click AS lpc
-LEFT JOIN lead_data AS ld
+LEFT JOIN leads AS l
     ON
-        lpc.visitor_id = ld.visitor_id
-        AND lpc.visit_date <= ld.created_at
-
+        lpc.visitor_id = l.visitor_id
+        AND lpc.visit_date <= l.created_at
 ORDER BY
-    ld.amount DESC NULLS LAST,
+    l.amount DESC NULLS LAST,
     lpc.visit_date ASC,
     lpc.utm_source ASC,
     lpc.utm_medium ASC,
